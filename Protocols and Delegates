@@ -1,0 +1,50 @@
+protocol AdvanceLifeSupport{
+    func performCPR()
+}
+class callEmergencyHandler{
+    var delegate:AdvanceLifeSupport?
+    func assessSituation(){
+        print("Tell me what happened")
+    }
+    func medicalEmergency(){
+        delegate?.performCPR()
+    }
+}
+struct Paramedic: AdvanceLifeSupport{
+    init(handler: callEmergencyHandler){
+        handler.delegate=self    // paramedic guy attends the emergency call and set himselt as handler
+        
+    }
+    func performCPR() {
+        print("Does chest compression")
+    }
+}
+class Doctor:AdvanceLifeSupport{
+    func performCPR() {
+        print("the Doctor does chest cmpression for 30 seconds")
+    }
+    func UseStethoscope(){
+        print("Listening to heart Sound")
+    }
+}
+
+class Surgeon: Doctor {
+    override func performCPR() {
+        super.performCPR()
+        print("Surgeon also did CPR")
+    }
+    func UseElectricDrill(){
+        print("Whirrrrrr.....")
+    }
+}
+
+let Ram = callEmergencyHandler()
+let Shyam = Paramedic(handler: Ram)
+let Mohan = Doctor()
+let Ghanshyam = Surgeon()
+Ram.assessSituation()
+Shyam.performCPR()
+Mohan.performCPR()
+Mohan.UseStethoscope()
+Ghanshyam.performCPR()
+Ghanshyam.UseElectricDrill()
